@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CarrotNote</string>
+    <string name="detail_count">count</string>
+    <string name="detail_reason">reason</string>
+    <string name="detail_time">time</string>
+    <string name="detail_note">note</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
