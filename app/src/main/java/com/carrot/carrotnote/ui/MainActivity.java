@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -49,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
             private Fragment[] mFragments = {
                     new FormulaFragment(),
-                    MainFragment.getInstance(),
+                    ListFragment.getInstance(),
                     new ChartsFragment()
             };
 
@@ -88,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.addOnTabSelectedListener(mOnTabSelectedListener);
         populateTabsFromPagerAdapter();
         // Now update the scroll position to match the ViewPager's current item
-        mTabLayout.setScrollPosition(mViewPager.getCurrentItem(), 0f, true);
+        //mTabLayout.setScrollPosition(mViewPager.getCurrentItem(), 0f, true);
+
         mAttached = true;
     }
 

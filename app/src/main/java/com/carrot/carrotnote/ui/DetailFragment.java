@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,13 +28,7 @@ import com.carrot.carrotnote.R;
 import com.carrot.carrotnote.model.Bill;
 import com.carrot.carrotnote.util.KeyboardUtils;
 import com.carrot.carrotnote.util.LogUtil;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-
-import org.jaaksi.pickerview.picker.BasePicker;
 import org.jaaksi.pickerview.picker.TimePicker;
-import org.jaaksi.pickerview.widget.PickerView;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -77,6 +72,7 @@ public class DetailFragment extends Fragment implements TimePicker.OnTimeSelectL
         mActivity = (AppCompatActivity) context;
         mActivity.getOnBackPressedDispatcher().addCallback(mCallback);
         mDateFormat = new SimpleDateFormat(DATE_TO_STRING_DETAIL_PATTERN, Locale.getDefault());
+        createPicker();
     }
 
     @Nullable
@@ -84,12 +80,14 @@ public class DetailFragment extends Fragment implements TimePicker.OnTimeSelectL
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_detail, container, false);
-        FloatingActionButton saveButton = root.findViewById(R.id.save_button);
-        createPicker();
+        ImageView backButton = root.findViewById(R.id.detail_back);
+        ImageView saveButton = root.findViewById(R.id.detail_save);
+        backButton.setOnClickListener(v -> mActivity.onBackPressed());
         saveButton.setOnClickListener(v -> {
-            mActivity.onBackPressed();
+            if (checkBill() == QUALIFIED) {
+                saveBill();
+            }
         });
-
         if (getArguments() == null) {
             throw new RuntimeException("Why not bill?");
         }

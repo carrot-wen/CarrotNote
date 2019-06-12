@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.carrot.carrotnote.util.LogUtil;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class SingleAdapter<T, VH extends ViewHolder<T>> extends RecyclerView.Adapter<VH> {
@@ -61,15 +62,7 @@ public class SingleAdapter<T, VH extends ViewHolder<T>> extends RecyclerView.Ada
     }
 
 
-
-    private List<T>  sort(List<T> list) {
-        return list;
-    }
-
-    public void setData(@NonNull List<T> data) {
-
-        List<T> list = sort(data);
-
+    public void setData(@NonNull List<T> list) {
         if (mDataList == null) {
             mDataList = list;
             notifyItemRangeChanged(0, mDataList.size());

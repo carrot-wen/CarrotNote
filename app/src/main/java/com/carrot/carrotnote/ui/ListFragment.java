@@ -28,18 +28,22 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainFragment extends Fragment {
+public class ListFragment extends Fragment {
 
-    private static final String TAG = "MainFragment";
+    private static final String TAG = "ListFragment";
 
     private IPresenter mIPresenter;
     private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
     private SingleAdapter<Bill, BillViewHolder> mAdapter;
     private Activity mActivity;
 
 
-    public static MainFragment getInstance() {
-        return new MainFragment();
+    private FloatingActionButton mAddButton;
+
+
+    public static ListFragment getInstance() {
+        return new ListFragment();
     }
 
     @Override
@@ -59,6 +63,7 @@ public class MainFragment extends Fragment {
 
             @Override
             public void notify(List<Bill> bills) {
+                bills.sort((o1, o2) -> (int) (o2.getTime() - o1.getTime()));
                 print(bills);
                 mAdapter.setData(bills);
             }
@@ -68,14 +73,12 @@ public class MainFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_main, container, false);
+        View root = inflater.inflate(R.layout.fragment_list, container, false);
         mRecyclerView = root.findViewById(R.id.bill_list);
-        initRecyclerView();
         initButton(root);
+        initRecyclerView();
         LogUtil.d(TAG, "onCreateView:  ");
         mIPresenter.load();
-
-
         return root;
     }
 
@@ -86,8 +89,8 @@ public class MainFragment extends Fragment {
     }
 
     private void initButton(View root) {
-        FloatingActionButton addButton = root.findViewById(R.id.add_button);
-        addButton.setOnClickListener(v -> startDetailActivity(new Bill()));
+        mAddButton = root.findViewById(R.id.add_button);
+        mAddButton.setOnClickListener(v -> startDetailActivity(new Bill()));
     }
 
 
@@ -98,7 +101,9 @@ public class MainFragment extends Fragment {
                 .get(mActivity);
 
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mLayoutManager = new LinearLayoutManager(mActivity);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addOnScrollListener(mOnScrollListener);
     }
 
     private void startDetailActivity(Bill bill) {
@@ -118,6 +123,31 @@ public class MainFragment extends Fragment {
             LogUtil.d(TAG, "print: bill " + bill.toString());
         }
     }
+
+
+    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+
+
+        @Override
+        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+
+            boolean hasCovered = covered();
+            if (hasCovered && mAddButton.getVisibility() == View.VISIBLE) {
+                mAddButton.setVisibility(View.GONE);
+            } else if (!hasCovered && mAddButton.getVisibility() == View.GONE) {
+                mAddButton.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+        /**
+         * Determine if the button obscures the last item
+         */
+        private boolean covered() {
+            return !mRecyclerView.canScrollVertically(1) && mRecyclerView.canScrollVertically(-1);
+        }
+
+    };
 
 
 }

@@ -1,61 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.DetailActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/detail_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/detail_count"
-            android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--color #FFE03D-->
+        <ImageView
+            android:id="@+id/detail_back"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:hint="@string/detail_count"
-            android:inputType="numberSigned|numberDecimal"
-            android:textSize="36sp" />
-
-        <EditText
-            android:id="@+id/detail_reason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/detail_reason"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/detail_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:focusable="true"
+            android:layout_gravity="start"
+            android:layout_marginStart="20dp"
             android:clickable="true"
-            android:hint="@string/detail_time"
-            android:textSize="20sp" />
+            android:focusable="true"
+            android:src="@drawable/icon_back" />
 
-
-        <EditText
-            android:id="@+id/detail_note"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/detail_save"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/detail_note"
-            android:maxHeight="300dp"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/icon_save" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/detail_count"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/icon_save" />
-</RelativeLayout>
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:hint="@string/detail_count"
+        android:inputType="numberSigned|numberDecimal"
+        android:textSize="36sp" />
+
+    <EditText
+        android:id="@+id/detail_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/detail_reason"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/detail_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:hint="@string/detail_time"
+        android:textSize="20sp" />
+
+
+    <EditText
+        android:id="@+id/detail_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/detail_note"
+        android:maxHeight="300dp"
+        android:textSize="20sp" />
+</LinearLayout>
